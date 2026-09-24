@@ -1,0 +1,5374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
+
+<meta
+    name="theme-color"
+    content="#0b0b0a"
+>
+
+<meta
+    name="description"
+    content="Empire Training Program — sistema pessoal de treinamento, acompanhamento e progressão."
+>
+
+<link
+    rel="manifest"
+    href="./manifest.json"
+>
+
+<link
+    rel="icon"
+    href="./icons/icon-192.png"
+>
+
+<title>
+    Empire Training Program
+</title>
+
+
+<style>
+
+/* =========================================================
+   ROOT
+   ========================================================= */
+
+:root{
+
+    --bg:#0b0b0a;
+    --bg-soft:#11110f;
+
+    --surface:#141412;
+    --surface-2:#181815;
+
+    --text:#eee9df;
+    --muted:#8b877e;
+    --dim:#57534c;
+
+    --gold:#b7a27b;
+    --gold-light:#d4c29b;
+
+    --border:rgba(255,255,255,.09);
+
+    --danger:#76504c;
+
+    --radius:18px;
+
+    --max:1100px;
+
+    --shadow:
+        0 25px 70px rgba(0,0,0,.35);
+
+}
+
+
+/* =========================================================
+   THEMES
+   ========================================================= */
+
+body[data-theme="noir"]{
+
+    --bg:#050505;
+    --bg-soft:#090909;
+    --surface:#0e0e0e;
+    --surface-2:#151515;
+
+    --gold:#aaa9a4;
+    --gold-light:#e0ded8;
+
+}
+
+body[data-theme="heritage"]{
+
+    --bg:#11100d;
+    --bg-soft:#17140f;
+    --surface:#1b1813;
+    --surface-2:#211c15;
+
+    --gold:#c1a26c;
+    --gold-light:#e0c995;
+
+}
+
+body[data-theme="signal"]{
+
+    --bg:#090b0c;
+    --bg-soft:#0e1112;
+    --surface:#131719;
+    --surface-2:#181d1f;
+
+    --gold:#c3a35d;
+    --gold-light:#e2c77f;
+
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    margin:0;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(183,162,123,.07),
+            transparent 35%
+        ),
+        var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    line-height:1.55;
+
+    min-height:100vh;
+
+}
+
+button,
+input,
+select{
+
+    font:inherit;
+
+}
+
+button{
+
+    cursor:pointer;
+
+}
+
+::selection{
+
+    background:var(--gold);
+    color:#111;
+
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.intro{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:9999;
+
+    background:#080807;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+
+}
+
+.intro.hidden{
+
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+}
+
+.intro-background{
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        50px 50px;
+
+    mask-image:
+        radial-gradient(
+            circle,
+            black,
+            transparent 75%
+        );
+
+}
+
+.intro-content{
+
+    position:relative;
+
+    text-align:center;
+
+    z-index:2;
+
+}
+
+.intro-overline{
+
+    color:var(--gold);
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    margin-bottom:30px;
+
+}
+
+.intro-crown{
+
+    border:0;
+
+    background:transparent;
+
+    width:150px;
+
+    padding:15px;
+
+    color:var(--gold);
+
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+
+}
+
+.intro-crown:hover{
+
+    transform:
+        translateY(-5px)
+        scale(1.03);
+
+    filter:
+        drop-shadow(
+            0 0 25px
+            rgba(183,162,123,.3)
+        );
+
+}
+
+.intro-crown svg{
+
+    width:100%;
+
+    fill:currentColor;
+
+}
+
+.intro-title{
+
+    margin-top:20px;
+
+    font-family:Georgia,serif;
+
+    font-size:clamp(
+        50px,
+        12vw,
+        110px
+    );
+
+    letter-spacing:-5px;
+
+    line-height:.9;
+
+}
+
+.intro-subtitle{
+
+    color:var(--gold);
+
+    font-size:9px;
+
+    letter-spacing:5px;
+
+    margin-top:10px;
+
+}
+
+.intro-hint{
+
+    margin-top:35px;
+
+    color:var(--dim);
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app{
+
+    max-width:var(--max);
+
+    margin:auto;
+
+    padding:
+        30px
+        30px
+        100px;
+
+}
+
+@media(max-width:600px){
+
+    .app{
+
+        padding:
+            20px
+            16px
+            90px;
+
+    }
+
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.hero{
+
+    min-height:90vh;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    position:relative;
+
+}
+
+.header-grid{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.25;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent 49.9%,
+            rgba(255,255,255,.04) 50%,
+            transparent 50.1%
+        );
+
+}
+
+.eyebrow{
+
+    position:relative;
+
+    color:var(--gold);
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    margin-bottom:25px;
+
+}
+
+.hero-title{
+
+    position:relative;
+
+    margin:0;
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(
+            70px,
+            15vw,
+            170px
+        );
+
+    letter-spacing:
+        -7px;
+
+    line-height:.78;
+
+}
+
+.hero-title span{
+
+    color:var(--gold);
+
+}
+
+.hero-description{
+
+    position:relative;
+
+    max-width:550px;
+
+    color:var(--muted);
+
+    font-size:13px;
+
+    margin-top:40px;
+
+}
+
+.hero-meta{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+
+    margin-top:25px;
+
+}
+
+.meta{
+
+    border:1px solid var(--border);
+
+    padding:7px 10px;
+
+    border-radius:20px;
+
+    font-size:7px;
+
+    letter-spacing:1.5px;
+
+    color:var(--muted);
+
+}
+
+
+/* =========================================================
+   MARQUEE
+   ========================================================= */
+
+.marquee{
+
+    overflow:hidden;
+
+    border-top:
+        1px solid var(--border);
+
+    border-bottom:
+        1px solid var(--border);
+
+    margin-bottom:90px;
+
+}
+
+.marquee-track{
+
+    display:flex;
+
+    width:max-content;
+
+    animation:
+        marquee 30s linear infinite;
+
+}
+
+.marquee-item{
+
+    padding:16px 30px;
+
+    white-space:nowrap;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    letter-spacing:2px;
+
+}
+
+.marquee-item strong{
+
+    color:var(--gold);
+
+}
+
+@keyframes marquee{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+section{
+
+    margin-bottom:100px;
+
+}
+
+.section-head{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:30px;
+
+    align-items:end;
+
+    margin-bottom:25px;
+
+}
+
+.kicker{
+
+    color:var(--gold);
+
+    font-size:7px;
+
+    letter-spacing:3px;
+
+}
+
+.section-title{
+
+    font-family:Georgia,serif;
+
+    font-size:
+        clamp(
+            30px,
+            6vw,
+            55px
+        );
+
+    font-weight:400;
+
+    margin:
+        8px
+        0
+        0;
+
+}
+
+.section-note{
+
+    max-width:350px;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+}
+
+.stat{
+
+    padding:25px;
+
+    border-right:
+        1px solid var(--border);
+
+}
+
+.stat:last-child{
+
+    border-right:0;
+
+}
+
+.stat-number{
+
+    font-family:Georgia,serif;
+
+    font-size:30px;
+
+}
+
+.stat-label{
+
+    margin-top:8px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    letter-spacing:1.5px;
+
+}
+
+@media(max-width:650px){
+
+    .stats{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .stat:nth-child(2){
+
+        border-right:0;
+
+    }
+
+    .stat:nth-child(-n+2){
+
+        border-bottom:
+            1px solid var(--border);
+
+    }
+
+}
+
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+}
+
+.card{
+
+    position:relative;
+
+    min-height:250px;
+
+    padding:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.035),
+            transparent
+        );
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease;
+
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:
+        rgba(183,162,123,.3);
+
+}
+
+.card-number{
+
+    color:var(--gold);
+
+    font-size:8px;
+
+}
+
+.card-mark{
+
+    width:35px;
+    height:1px;
+
+    margin:
+        45px
+        0
+        20px;
+
+    background:var(--gold);
+
+}
+
+.card h3{
+
+    font-family:Georgia,serif;
+
+    font-size:22px;
+
+    font-weight:400;
+
+}
+
+.card p{
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+@media(max-width:700px){
+
+    .cards{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+/* =========================================================
+   WEEK
+   ========================================================= */
+
+.week{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+}
+
+.day{
+
+    padding:18px 12px;
+
+    min-height:150px;
+
+    border-right:
+        1px solid var(--border);
+
+}
+
+.day:last-child{
+
+    border-right:0;
+
+}
+
+.day-name{
+
+    color:var(--gold);
+
+    font-size:8px;
+
+    letter-spacing:1px;
+
+}
+
+.day-work{
+
+    margin-top:25px;
+
+    font-family:Georgia,serif;
+
+    font-size:14px;
+
+}
+
+.day-type{
+
+    margin-top:10px;
+
+    color:var(--muted);
+
+    font-size:6px;
+
+    letter-spacing:1px;
+
+}
+
+@media(max-width:800px){
+
+    .week{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .day{
+
+        border-bottom:
+            1px solid var(--border);
+
+    }
+
+}
+
+
+/* =========================================================
+   WORKOUT
+   ========================================================= */
+
+.workout{
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+
+    margin-bottom:20px;
+
+}
+
+.workout-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+.workout-name{
+
+    font-family:Georgia,serif;
+
+    font-size:22px;
+
+}
+
+.workout-tag{
+
+    color:var(--gold);
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+}
+
+.exercise{
+
+    position:relative;
+
+    display:grid;
+
+    grid-template-columns:
+        40px
+        1fr
+        auto
+        38px;
+
+    gap:15px;
+
+    align-items:center;
+
+    padding:17px 20px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    transition:
+        background .25s ease;
+
+}
+
+.exercise:last-of-type{
+
+    border-bottom:0;
+
+}
+
+.exercise.empire-completed{
+
+    background:
+        rgba(183,162,123,.035);
+
+}
+
+.exercise-number{
+
+    color:var(--dim);
+
+    font-size:8px;
+
+}
+
+.exercise-name{
+
+    font-family:Georgia,serif;
+
+    font-size:15px;
+
+}
+
+.exercise-note{
+
+    margin-top:2px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+.exercise-sets{
+
+    color:var(--gold);
+
+    font-size:8px;
+
+    white-space:nowrap;
+
+}
+
+.exercise-check{
+
+    width:30px;
+
+    height:30px;
+
+    padding:0;
+
+    border:
+        1px solid
+        rgba(183,162,123,.35);
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:transparent;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+
+}
+
+.exercise-check.completed{
+
+    background:var(--gold);
+
+    border-color:var(--gold);
+
+    color:#111;
+
+}
+
+.exercise-check.completed::after{
+
+    content:"✓";
+
+    font-weight:700;
+
+}
+
+.exercise-check:active{
+
+    transform:scale(.9);
+
+}
+
+.exercise-completed-label{
+
+    display:none;
+
+}
+
+.session-progress{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:15px 20px;
+
+    border-top:
+        1px solid var(--border);
+
+}
+
+.session-progress-text{
+
+    min-width:125px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    letter-spacing:1px;
+
+}
+
+.session-progress-text strong{
+
+    color:var(--gold);
+
+}
+
+.session-progress-bar{
+
+    flex:1;
+
+    height:2px;
+
+    background:
+        rgba(255,255,255,.06);
+
+}
+
+.session-progress-fill{
+
+    width:0;
+
+    height:100%;
+
+    background:var(--gold);
+
+    transition:width .3s ease;
+
+}
+
+.complete-session{
+
+    margin:
+        0
+        20px
+        20px;
+
+    width:
+        calc(100% - 40px);
+
+}
+
+@media(max-width:600px){
+
+    .exercise{
+
+        grid-template-columns:
+            28px
+            1fr
+            32px;
+
+    }
+
+    .exercise-sets{
+
+        display:none;
+
+    }
+
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.button{
+
+    border:
+        1px solid var(--border);
+
+    border-radius:30px;
+
+    background:transparent;
+
+    color:var(--text);
+
+    padding:
+        11px
+        15px;
+
+    font-size:7px;
+
+    letter-spacing:1.2px;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease;
+
+}
+
+.button:hover{
+
+    border-color:
+        rgba(183,162,123,.4);
+
+}
+
+.button:active{
+
+    transform:scale(.97);
+
+}
+
+.button.primary{
+
+    background:var(--gold);
+
+    border-color:var(--gold);
+
+    color:#111;
+
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.progress-layout{
+
+    display:grid;
+
+    grid-template-columns:
+        260px
+        1fr;
+
+    gap:60px;
+
+    align-items:center;
+
+}
+
+.progress-ring{
+
+    --progress:0;
+
+    width:220px;
+
+    aspect-ratio:1;
+
+    border-radius:50%;
+
+    display:grid;
+
+    place-items:center;
+
+    background:
+
+        conic-gradient(
+            var(--gold)
+            calc(var(--progress) * 1%),
+            rgba(255,255,255,.06)
+            0
+        );
+
+    position:relative;
+
+}
+
+.progress-ring::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:8px;
+
+    border-radius:50%;
+
+    background:var(--bg);
+
+}
+
+.progress-content{
+
+    position:relative;
+
+    z-index:2;
+
+    text-align:center;
+
+}
+
+.progress-number{
+
+    font-family:Georgia,serif;
+
+    font-size:38px;
+
+}
+
+.progress-label{
+
+    color:var(--gold);
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+}
+
+.progress-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.progress-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    padding:
+        13px
+        0;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color:var(--muted);
+
+    font-size:8px;
+
+    letter-spacing:1px;
+
+}
+
+.progress-row span:last-child{
+
+    color:var(--gold);
+
+}
+
+@media(max-width:650px){
+
+    .progress-layout{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .progress-ring{
+
+        width:180px;
+
+        margin:auto;
+
+    }
+
+}
+
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.training-calendar{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+}
+
+.calendar-header{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-bottom:20px;
+
+}
+
+.calendar-month{
+
+    font-family:Georgia,serif;
+
+    font-size:20px;
+
+}
+
+.calendar-nav{
+
+    width:34px;
+
+    height:34px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--gold);
+
+}
+
+.calendar-weekdays,
+.calendar-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(7,1fr);
+
+    gap:5px;
+
+}
+
+.calendar-weekdays{
+
+    margin-bottom:6px;
+
+}
+
+.calendar-weekdays div{
+
+    text-align:center;
+
+    color:var(--dim);
+
+    font-size:6px;
+
+}
+
+.calendar-day{
+
+    position:relative;
+
+    aspect-ratio:1;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.035);
+
+    border-radius:9px;
+
+    color:var(--muted);
+
+    font-size:9px;
+
+}
+
+.calendar-day.today{
+
+    border-color:
+        rgba(183,162,123,.6);
+
+}
+
+.calendar-day.completed{
+
+    background:
+        rgba(183,162,123,.15);
+
+    border-color:
+        rgba(183,162,123,.5);
+
+    color:var(--gold-light);
+
+}
+
+.calendar-day.partial{
+
+    background:
+        rgba(183,162,123,.05);
+
+    border-color:
+        rgba(183,162,123,.3);
+
+    color:var(--gold);
+
+}
+
+.calendar-day.missed{
+
+    border-color:
+        rgba(118,80,76,.35);
+
+    color:#76504c;
+
+}
+
+.calendar-day.completed::after{
+
+    content:"✓";
+
+    position:absolute;
+
+    right:4px;
+
+    bottom:1px;
+
+    font-size:7px;
+
+}
+
+.calendar-day.missed::after{
+
+    content:"×";
+
+    position:absolute;
+
+    right:4px;
+
+    bottom:1px;
+
+    font-size:7px;
+
+}
+
+.calendar-legend{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:15px;
+
+    margin-top:17px;
+
+    color:var(--muted);
+
+    font-size:7px;
+
+}
+
+.calendar-legend span{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+}
+
+.legend-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:#333;
+
+}
+
+.legend-dot.done{
+
+    background:var(--gold);
+
+}
+
+.legend-dot.partial{
+
+    background:#8b795d;
+
+}
+
+.legend-dot.missed{
+
+    background:#76504c;
+
+}
+
+
+/* =========================================================
+   SAFETY
+   ========================================================= */
+
+.safety{
+
+    display:flex;
+
+    gap:20px;
+
+    padding:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:var(--radius);
+
+}
+
+.safety-symbol{
+
+    color:var(--gold);
+
+}
+
+.safety h3{
+
+    margin-top:0;
+
+    font-family:Georgia,serif;
+
+    font-weight:400;
+
+}
+
+.safety p{
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+
+/* =========================================================
+   THEMES
+   ========================================================= */
+
+.theme-panel{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:7px;
+
+    margin-top:15px;
+
+}
+
+.theme-button{
+
+    border:
+        1px solid var(--border);
+
+    background:transparent;
+
+    color:var(--muted);
+
+    border-radius:8px;
+
+    padding:11px 5px;
+
+    font-size:6px;
+
+    letter-spacing:1px;
+
+}
+
+.theme-button.active{
+
+    color:var(--gold);
+
+    border-color:
+        rgba(183,162,123,.4);
+
+}
+
+
+/* =========================================================
+   SOUND
+   ========================================================= */
+
+.sound-control{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    margin-top:18px;
+
+    padding:14px 16px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:12px;
+
+}
+
+.sound-status{
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    letter-spacing:1px;
+
+}
+
+.sound-button{
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:7px 12px;
+
+    background:transparent;
+
+    color:var(--gold);
+
+    font-size:7px;
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer{
+
+    text-align:center;
+
+    padding:
+        50px
+        0
+        30px;
+
+    color:var(--dim);
+
+    font-size:7px;
+
+    letter-spacing:2px;
+
+}
+
+.footer-crown{
+
+    color:var(--gold);
+
+    font-size:28px;
+
+    margin-bottom:10px;
+
+}
+
+
+/* =========================================================
+   MODALS
+   ========================================================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+        rgba(0,0,0,.75);
+
+    backdrop-filter:
+        blur(12px);
+
+}
+
+.modal.open{
+
+    display:flex;
+
+}
+
+.modal-box{
+
+    width:min(
+        500px,
+        100%
+    );
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    padding:25px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:20px;
+
+    background:var(--surface);
+
+    box-shadow:var(--shadow);
+
+    position:relative;
+
+}
+
+.close{
+
+    position:absolute;
+
+    right:15px;
+
+    top:12px;
+
+    border:0;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    font-size:25px;
+
+}
+
+.modal h2{
+
+    font-family:Georgia,serif;
+
+    font-weight:400;
+
+}
+
+.lead{
+
+    color:var(--muted);
+
+    font-size:10px;
+
+}
+
+.profile-form{
+
+    display:grid;
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+.profile-form label{
+
+    color:var(--muted);
+
+    font-size:7px;
+
+    letter-spacing:1px;
+
+}
+
+.profile-form input,
+.profile-form select{
+
+    display:block;
+
+    width:100%;
+
+    margin-top:6px;
+
+    padding:12px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:9px;
+
+    background:var(--bg-soft);
+
+    color:var(--text);
+
+    outline:none;
+
+}
+
+.profile-save{
+
+    margin-top:20px;
+
+}
+
+.profile-status{
+
+    margin-top:15px;
+
+    color:var(--muted);
+
+    font-size:8px;
+
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+.timer-display{
+
+    font-family:Georgia,serif;
+
+    font-size:65px;
+
+    text-align:center;
+
+    margin:30px 0;
+
+}
+
+.timer-controls{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:6px;
+
+}
+
+.timer-controls:nth-last-child(1){
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+}
+
+@media(max-width:500px){
+
+    .timer-controls{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+
+/* =========================================================
+   BOTTOM BAR
+   ========================================================= */
+
+.appbar{
+
+    position:fixed;
+
+    z-index:3000;
+
+    bottom:12px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:min(
+        600px,
+        calc(100% - 24px)
+    );
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(5,1fr);
+
+    padding:7px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    background:
+        rgba(14,14,13,.9);
+
+    backdrop-filter:
+        blur(20px);
+
+    box-shadow:
+        0 15px 50px
+        rgba(0,0,0,.45);
+
+}
+
+.appbar button{
+
+    border:0;
+
+    background:transparent;
+
+    color:var(--muted);
+
+    padding:10px 4px;
+
+    font-size:6px;
+
+    letter-spacing:1px;
+
+}
+
+.appbar button:hover{
+
+    color:var(--gold);
+
+}
+
+
+/* =========================================================
+   INSTALL
+   ========================================================= */
+
+.install-button{
+
+    display:none;
+
+}
+
+.install-button.visible{
+
+    display:block;
+
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:
+        translateY(15px);
+
+    transition:
+        opacity .7s ease,
+        transform .7s ease;
+
+}
+
+.reveal.visible{
+
+    opacity:1;
+
+    transform:none;
+
+}
+
+@media(
+    prefers-reduced-motion:reduce
+){
+
+    *{
+
+        scroll-behavior:auto!important;
+        animation:none!important;
+        transition:none!important;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     INTRO
+======================================================= -->
+
+<div
+    class="intro"
+    id="intro"
+>
+
+    <div class="intro-background"></div>
+
+    <div class="intro-content">
+
+        <div class="intro-overline">
+            ESTABLISHED / EMPIRE TRAINING PROGRAM
+        </div>
+
+        <button
+            class="intro-crown"
+            id="introCrown"
+            aria-label="Entrar no Empire Training Program"
+        >
+
+            <svg viewBox="0 0 320 240">
+
+                <rect x="25" y="45" width="30" height="95"/>
+                <rect x="55" y="75" width="30" height="65"/>
+                <rect x="85" y="105" width="30" height="35"/>
+                <rect x="115" y="45" width="30" height="95"/>
+                <rect x="145" y="105" width="30" height="35"/>
+                <rect x="175" y="105" width="30" height="35"/>
+                <rect x="205" y="45" width="30" height="95"/>
+                <rect x="235" y="75" width="30" height="65"/>
+                <rect x="265" y="45" width="30" height="95"/>
+                <rect x="25" y="140" width="270" height="25"/>
+                <rect x="45" y="165" width="230" height="18"/>
+
+            </svg>
+
+        </button>
+
+        <div class="intro-title">
+            EMPIRE
+        </div>
+
+        <div class="intro-subtitle">
+            TRAINING PROGRAM
+        </div>
+
+        <div class="intro-hint">
+            TOQUE NA COROA PARA ENTRAR
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     APP
+======================================================= -->
+
+<main class="app">
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<header class="hero">
+
+    <div class="header-grid"></div>
+
+    <div
+        class="eyebrow"
+        id="personalGreeting"
+    >
+        EMPIRE TRAINING PROGRAM / PHASE 01
+    </div>
+
+    <h1 class="hero-title">
+
+        EMPIRE
+
+        <br>
+
+        <span>
+            TRAINING
+        </span>
+
+    </h1>
+
+    <p class="hero-description">
+
+        Um sistema pessoal de treinamento baseado em
+        consistência, técnica, controle de movimento
+        e progressão gradual.
+
+    </p>
+
+    <div class="hero-meta">
+
+        <div class="meta">
+            PHASE 01
+        </div>
+
+        <div class="meta">
+            STRENGTH
+        </div>
+
+        <div class="meta">
+            CONTROL
+        </div>
+
+        <div class="meta">
+            DISCIPLINE
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     MARQUEE
+======================================================= -->
+
+<div class="marquee">
+
+    <div class="marquee-track">
+
+        <div class="marquee-item">
+            <strong>EMPIRE</strong>
+            — DISCIPLINE
+        </div>
+
+        <div class="marquee-item">
+            CONTROL — CONSISTENCY
+        </div>
+
+        <div class="marquee-item">
+            <strong>EMPIRE</strong>
+            — PROGRESS
+        </div>
+
+        <div class="marquee-item">
+            TRAIN WITH PURPOSE
+        </div>
+
+        <div class="marquee-item">
+            <strong>EMPIRE</strong>
+            — DISCIPLINE
+        </div>
+
+        <div class="marquee-item">
+            CONTROL — CONSISTENCY
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     OVERVIEW
+======================================================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                01 / OVERVIEW
+            </div>
+
+            <h2 class="section-title">
+                The Protocol
+            </h2>
+
+        </div>
+
+        <p class="section-note">
+
+            O programa prioriza execução consistente,
+            controle e evolução sustentável.
+
+        </p>
+
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat">
+
+            <div class="stat-number">
+                3
+            </div>
+
+            <div class="stat-label">
+                SESSÕES / SEMANA
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-number">
+                A/B
+            </div>
+
+            <div class="stat-label">
+                TREINOS
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-number">
+                8–15
+            </div>
+
+            <div class="stat-label">
+                REPETIÇÕES
+            </div>
+
+        </div>
+
+        <div class="stat">
+
+            <div class="stat-number">
+                01
+            </div>
+
+            <div class="stat-label">
+                PHASE
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     PRINCIPLES
+======================================================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                02 / PRINCIPLES
+            </div>
+
+            <h2 class="section-title">
+                Built on Control
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="cards">
+
+        <article class="card">
+
+            <div class="card-number">
+                01
+            </div>
+
+            <div class="card-mark"></div>
+
+            <h3>
+                Technique
+            </h3>
+
+            <p>
+                Movimento controlado, amplitude confortável
+                e execução consistente antes de aumentar
+                a dificuldade.
+            </p>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="card-number">
+                02
+            </div>
+
+            <div class="card-mark"></div>
+
+            <h3>
+                Tension
+            </h3>
+
+            <p>
+                Tempo controlado e pequenas pausas isométricas
+                podem aumentar a dificuldade sem depender
+                de cargas máximas.
+            </p>
+
+        </article>
+
+
+        <article class="card">
+
+            <div class="card-number">
+                03
+            </div>
+
+            <div class="card-mark"></div>
+
+            <h3>
+                Progress
+            </h3>
+
+            <p>
+                A evolução acontece gradualmente através de
+                técnica, repetições, controle e consistência.
+            </p>
+
+        </article>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SCHEDULE
+======================================================= -->
+
+<section id="schedule">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                03 / SCHEDULE
+            </div>
+
+            <h2 class="section-title">
+                Weekly Structure
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="week">
+
+        <div class="day">
+            <div class="day-name">MON</div>
+            <div class="day-work">Strength A</div>
+            <div class="day-type">TRAINING</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">TUE</div>
+            <div class="day-work">Light Aerobic</div>
+            <div class="day-type">RECOVERY</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">WED</div>
+            <div class="day-work">Strength B</div>
+            <div class="day-type">TRAINING</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">THU</div>
+            <div class="day-work">
+                Mobility + Light Conditioning
+            </div>
+            <div class="day-type">RECOVERY</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">FRI</div>
+            <div class="day-work">Strength A</div>
+            <div class="day-type">TRAINING</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">SAT</div>
+            <div class="day-work">Free Activity</div>
+            <div class="day-type">OPTIONAL</div>
+        </div>
+
+        <div class="day">
+            <div class="day-name">SUN</div>
+            <div class="day-work">Recovery</div>
+            <div class="day-type">REST</div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     TRAINING
+======================================================= -->
+
+<section
+    id="workouts"
+>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                04 / TRAINING
+            </div>
+
+            <h2 class="section-title">
+                The Sessions
+            </h2>
+
+        </div>
+
+    </div>
+
+
+<!-- STRENGTH A -->
+
+<div
+    class="workout"
+    data-workout="strength-a"
+>
+
+    <div class="workout-header">
+
+        <div class="workout-name">
+            Strength A
+        </div>
+
+        <div class="workout-tag">
+            PHASE 01
+        </div>
+
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">01</div>
+        <div>
+            <div class="exercise-name">Squat</div>
+            <div class="exercise-note">
+                8–9 kg · controle o movimento
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 12–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">02</div>
+        <div>
+            <div class="exercise-name">Push-up</div>
+            <div class="exercise-note">
+                descida controlada
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 8–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">03</div>
+        <div>
+            <div class="exercise-name">
+                One-arm Row
+            </div>
+            <div class="exercise-note">
+                5–6 kg · cada braço
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 12–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">04</div>
+        <div>
+            <div class="exercise-name">Lunge</div>
+            <div class="exercise-note">
+                movimento estável
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 10–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">05</div>
+        <div>
+            <div class="exercise-name">
+                Glute Bridge
+            </div>
+            <div class="exercise-note">
+                pausa curta no topo
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 12–20
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">06</div>
+        <div>
+            <div class="exercise-name">
+                Calf Raise
+            </div>
+            <div class="exercise-note">
+                amplitude confortável
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 15–20
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">07</div>
+        <div>
+            <div class="exercise-name">Plank</div>
+            <div class="exercise-note">
+                tronco estável
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 30–60s
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">08</div>
+        <div>
+            <div class="exercise-name">Crunch</div>
+            <div class="exercise-note">
+                controle total
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 10–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">09</div>
+        <div>
+            <div class="exercise-name">
+                Close-grip Push-up
+            </div>
+            <div class="exercise-note">
+                tríceps
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 8–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">10</div>
+        <div>
+            <div class="exercise-name">
+                Grip Hold
+            </div>
+            <div class="exercise-note">
+                pegada
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 20–40s
+        </div>
+    </div>
+
+</div>
+
+
+<!-- STRENGTH B -->
+
+<div
+    class="workout"
+    data-workout="strength-b"
+>
+
+    <div class="workout-header">
+
+        <div class="workout-name">
+            Strength B
+        </div>
+
+        <div class="workout-tag">
+            PHASE 01
+        </div>
+
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">01</div>
+        <div>
+            <div class="exercise-name">
+                Pause Squat
+            </div>
+            <div class="exercise-note">
+                pequena pausa na posição confortável
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 10–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">02</div>
+        <div>
+            <div class="exercise-name">Push-up</div>
+            <div class="exercise-note">
+                execução controlada
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 8–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">03</div>
+        <div>
+            <div class="exercise-name">
+                One-arm Row
+            </div>
+            <div class="exercise-note">
+                5–6 kg · cada braço
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 12–15
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">04</div>
+        <div>
+            <div class="exercise-name">
+                Split Squat
+            </div>
+            <div class="exercise-note">
+                estabilidade e controle
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 10–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">05</div>
+        <div>
+            <div class="exercise-name">
+                Glute Bridge
+            </div>
+            <div class="exercise-note">
+                pausa curta no topo
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 15–20
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">06</div>
+        <div>
+            <div class="exercise-name">
+                Calf Raise
+            </div>
+            <div class="exercise-note">
+                movimento controlado
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 15–20
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">07</div>
+        <div>
+            <div class="exercise-name">
+                Dead Bug
+            </div>
+            <div class="exercise-note">
+                controle do tronco
+            </div>
+        </div>
+        <div class="exercise-sets">
+            3 × 8–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">08</div>
+        <div>
+            <div class="exercise-name">
+                Side Plank
+            </div>
+            <div class="exercise-note">
+                cada lado
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 20–40s
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">09</div>
+        <div>
+            <div class="exercise-name">
+                Close-grip Push-up
+            </div>
+            <div class="exercise-note">
+                tríceps
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 8–12
+        </div>
+    </div>
+
+
+    <div class="exercise">
+        <div class="exercise-number">10</div>
+        <div>
+            <div class="exercise-name">
+                Grip Hold
+            </div>
+            <div class="exercise-note">
+                pegada
+            </div>
+        </div>
+        <div class="exercise-sets">
+            2 × 20–40s
+        </div>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     PROGRESS
+======================================================= -->
+
+<section id="progress">
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                05 / PROGRESS
+            </div>
+
+            <h2 class="section-title">
+                Current Phase
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="progress-layout">
+
+        <div
+            class="progress-ring"
+            id="progressRing"
+        >
+
+            <div class="progress-content">
+
+                <div
+                    class="progress-number"
+                    id="progressNumber"
+                >
+                    0%
+                </div>
+
+                <div class="progress-label">
+                    PHASE 01
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="progress-info">
+
+            <div class="progress-row">
+                <span>
+                    SESSÕES CONCLUÍDAS
+                </span>
+                <span id="sessionsDone">
+                    0
+                </span>
+            </div>
+
+            <div class="progress-row">
+                <span>
+                    SEMANAS
+                </span>
+                <span id="weeksDone">
+                    0
+                </span>
+            </div>
+
+            <div class="progress-row">
+                <span>
+                    EXERCÍCIOS
+                </span>
+                <span id="exercisesDone">
+                    0
+                </span>
+            </div>
+
+            <div class="progress-row">
+                <span>
+                    SEQUÊNCIA
+                </span>
+                <span id="streakDone">
+                    0
+                </span>
+            </div>
+
+            <div class="progress-row">
+                <span>
+                    CONSISTÊNCIA
+                </span>
+                <span id="consistencyStatus">
+                    BUILDING
+                </span>
+            </div>
+
+            <button
+                class="button"
+                id="installButton"
+            >
+                INSTALAR EMPIRE
+            </button>
+
+            <button
+                class="button"
+                id="exportButton"
+            >
+                EXPORTAR HISTÓRICO
+            </button>
+
+            <button
+                class="button"
+                id="importButton"
+            >
+                IMPORTAR HISTÓRICO
+            </button>
+
+            <input
+                type="file"
+                id="importFile"
+                accept=".json"
+                hidden
+            >
+
+        </div>
+
+    </div>
+
+
+    <!-- CALENDAR -->
+
+    <div class="training-calendar">
+
+        <div class="calendar-header">
+
+            <button
+                class="calendar-nav"
+                id="calendarPrevious"
+            >
+                ‹
+            </button>
+
+            <div
+                class="calendar-month"
+                id="calendarMonth"
+            >
+            </div>
+
+            <button
+                class="calendar-nav"
+                id="calendarNext"
+            >
+                ›
+            </button>
+
+        </div>
+
+
+        <div class="calendar-weekdays">
+
+            <div>DOM</div>
+            <div>SEG</div>
+            <div>TER</div>
+            <div>QUA</div>
+            <div>QUI</div>
+            <div>SEX</div>
+            <div>SÁB</div>
+
+        </div>
+
+
+        <div
+            class="calendar-grid"
+            id="calendarGrid"
+        >
+        </div>
+
+
+        <div class="calendar-legend">
+
+            <span>
+                <i class="legend-dot done"></i>
+                REALIZADO
+            </span>
+
+            <span>
+                <i class="legend-dot partial"></i>
+                PARCIAL
+            </span>
+
+            <span>
+                <i class="legend-dot missed"></i>
+                NÃO REALIZADO
+            </span>
+
+        </div>
+
+
+        <div class="sound-control">
+
+            <span class="sound-status">
+                INTERAÇÕES SONORAS
+            </span>
+
+            <button
+                class="sound-button"
+                id="soundButton"
+            >
+                SOM ON
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SYSTEM
+======================================================= -->
+
+<section>
+
+    <div class="section-head">
+
+        <div>
+
+            <div class="kicker">
+                06 / SYSTEM
+            </div>
+
+            <h2 class="section-title">
+                Environment
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="safety">
+
+        <div class="safety-symbol">
+            ◆
+        </div>
+
+        <div>
+
+            <h3>
+                Train intelligently.
+            </h3>
+
+            <p>
+
+                A progressão deve ser gradual.
+                Priorize técnica e controle.
+                Não é necessário treinar até a falha ou
+                usar cargas máximas.
+                Se um movimento causar dor, pare e ajuste-o.
+                Dor persistente, inchaço, travamento ou
+                sensação de instabilidade merece avaliação
+                por um profissional de saúde.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="theme-panel">
+
+        <button
+            class="theme-button active"
+            data-theme="default"
+        >
+            QUIET LUXURY
+        </button>
+
+        <button
+            class="theme-button"
+            data-theme="noir"
+        >
+            NOIR
+        </button>
+
+        <button
+            class="theme-button"
+            data-theme="heritage"
+        >
+            HERITAGE
+        </button>
+
+        <button
+            class="theme-button"
+            data-theme="signal"
+        >
+            SIGNAL
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <div class="footer-crown">
+        ♛
+    </div>
+
+    <p>
+        EMPIRE TRAINING PROGRAM · PHASE 01
+    </p>
+
+</footer>
+
+</main>
+
+
+<!-- =======================================================
+     PROFILE MODAL
+======================================================= -->
+
+<div
+    class="modal"
+    id="profileModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeProfile()"
+        >
+            ×
+        </button>
+
+        <div class="kicker">
+            EMPIRE IDENTITY
+        </div>
+
+        <h2>
+            Personal Profile
+        </h2>
+
+        <p class="lead">
+            Seu perfil fica salvo neste aparelho.
+        </p>
+
+
+        <div class="profile-form">
+
+            <label>
+
+                NOME / APELIDO
+
+                <input
+                    id="profileName"
+                    type="text"
+                    maxlength="30"
+                    placeholder="Como deseja ser chamado?"
+                >
+
+            </label>
+
+
+            <label>
+
+                OBJETIVO
+
+                <select id="profileGoal">
+
+                    <option value="strength">
+                        Strength Foundation
+                    </option>
+
+                    <option value="conditioning">
+                        Conditioning
+                    </option>
+
+                    <option value="consistency">
+                        Consistency
+                    </option>
+
+                    <option value="general">
+                        General Training
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                NÍVEL
+
+                <select id="profileLevel">
+
+                    <option value="beginner">
+                        Beginner
+                    </option>
+
+                    <option value="intermediate">
+                        Intermediate
+                    </option>
+
+                    <option value="advanced">
+                        Advanced
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+
+                EQUIPAMENTO PRINCIPAL
+
+                <input
+                    id="profileEquipment"
+                    type="text"
+                    maxlength="50"
+                    placeholder="Ex.: mochilas + peso corporal"
+                >
+
+            </label>
+
+        </div>
+
+
+        <button
+            class="button primary profile-save"
+            onclick="saveProfile()"
+        >
+            SAVE EMPIRE PROFILE
+        </button>
+
+
+        <div
+            class="profile-status"
+            id="profileStatus"
+        >
+            Perfil ainda não configurado.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     TIMER MODAL
+======================================================= -->
+
+<div
+    class="modal"
+    id="timerModal"
+>
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeTimer()"
+        >
+            ×
+        </button>
+
+        <div class="kicker">
+            EMPIRE TIMER
+        </div>
+
+        <h2>
+            Rest Protocol
+        </h2>
+
+
+        <div
+            class="timer-display"
+            id="timerDisplay"
+        >
+            01:30
+        </div>
+
+
+        <div class="timer-controls">
+
+            <button
+                class="button"
+                onclick="setTimer(30)"
+            >
+                30 SEC
+            </button>
+
+            <button
+                class="button"
+                onclick="setTimer(60)"
+            >
+                60 SEC
+            </button>
+
+            <button
+                class="button"
+                onclick="setTimer(90)"
+            >
+                90 SEC
+            </button>
+
+            <button
+                class="button"
+                onclick="setTimer(120)"
+            >
+                120 SEC
+            </button>
+
+        </div>
+
+
+        <div
+            class="timer-controls"
+            style="margin-top:15px"
+        >
+
+            <button
+                class="button primary"
+                onclick="startTimer()"
+            >
+                START
+            </button>
+
+            <button
+                class="button"
+                onclick="pauseTimer()"
+            >
+                PAUSE
+            </button>
+
+            <button
+                class="button"
+                onclick="resetTimer()"
+            >
+                RESET
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     APP BAR
+======================================================= -->
+
+<nav class="appbar">
+
+    <button onclick="openTimer()">
+        ⏱ TIMER
+    </button>
+
+    <button onclick="scrollToSection('workouts')">
+        TRAINING
+    </button>
+
+    <button onclick="openProfile()">
+        PROFILE
+    </button>
+
+    <button onclick="scrollToSection('progress')">
+        PROGRESS
+    </button>
+
+    <button
+        onclick="toggleSound()"
+        id="appSoundButton"
+    >
+        SOUND
+    </button>
+
+</nav>
+
+
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
+<script>
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+const EXERCISE_KEY =
+    "empireTrainingExercisesV2";
+
+const SESSION_KEY =
+    "empireTrainingSessionsV2";
+
+const PROFILE_KEY =
+    "empireTrainingProfileV2";
+
+const THEME_KEY =
+    "empireTrainingThemeV2";
+
+const SOUND_KEY =
+    "empireTrainingSoundV2";
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+function todayKey(){
+
+    const d =
+        new Date();
+
+    return (
+        d.getFullYear() +
+        "-" +
+        String(d.getMonth()+1)
+            .padStart(2,"0") +
+        "-" +
+        String(d.getDate())
+            .padStart(2,"0")
+    );
+
+}
+
+
+/* =========================================================
+   STORAGE HELPERS
+========================================================= */
+
+function getJSON(key){
+
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(key)
+        ) || {};
+
+    }catch{
+
+        return {};
+
+    }
+
+}
+
+function saveJSON(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   AUDIO
+========================================================= */
+
+let audioContext = null;
+
+function initAudio(){
+
+    if(audioContext)
+        return audioContext;
+
+    const Audio =
+        window.AudioContext ||
+        window.webkitAudioContext;
+
+    if(!Audio)
+        return null;
+
+    audioContext =
+        new Audio();
+
+    return audioContext;
+
+}
+
+
+function sound(type="click"){
+
+    if(
+        localStorage.getItem(
+            SOUND_KEY
+        ) === "off"
+    )
+        return;
+
+    const ctx =
+        initAudio();
+
+    if(!ctx)
+        return;
+
+    if(ctx.state === "suspended")
+        ctx.resume();
+
+    const osc =
+        ctx.createOscillator();
+
+    const gain =
+        ctx.createGain();
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    const now =
+        ctx.currentTime;
+
+    const config = {
+
+        click:[520,.04,.018],
+        check:[700,.08,.028],
+        complete:[880,.16,.04],
+        timer:[760,.12,.035]
+
+    };
+
+    const [
+        frequency,
+        duration,
+        volume
+    ] =
+        config[type] ||
+        config.click;
+
+    osc.type =
+        "sine";
+
+    osc.frequency.setValueAtTime(
+        frequency,
+        now
+    );
+
+    gain.gain.setValueAtTime(
+        volume,
+        now
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+        .001,
+        now + duration
+    );
+
+    osc.start(now);
+
+    osc.stop(
+        now + duration
+    );
+
+}
+
+
+function vibrate(pattern=15){
+
+    if(navigator.vibrate)
+        navigator.vibrate(pattern);
+
+}
+
+
+/* =========================================================
+   EXERCISES
+========================================================= */
+
+function initializeExercises(){
+
+    document
+        .querySelectorAll(
+            ".workout"
+        )
+        .forEach(
+            workout => {
+
+                const workoutId =
+                    workout.dataset.workout;
+
+                workout
+                    .querySelectorAll(
+                        ".exercise"
+                    )
+                    .forEach(
+                        (exercise,index) => {
+
+                            const id =
+                                workoutId +
+                                "-" +
+                                String(index+1)
+                                    .padStart(2,"0");
+
+                            exercise.dataset.id =
+                                id;
+
+                            const button =
+                                document.createElement(
+                                    "button"
+                                );
+
+                            button.className =
+                                "exercise-check";
+
+                            button.type =
+                                "button";
+
+                            button.setAttribute(
+                                "aria-label",
+                                "Marcar exercício"
+                            );
+
+                            exercise.appendChild(
+                                button
+                            );
+
+                            button.onclick =
+                                event => {
+
+                                    event.stopPropagation();
+
+                                    toggleExercise(
+                                        id,
+                                        exercise,
+                                        button
+                                    );
+
+                                };
+
+                            loadExercise(
+                                id,
+                                exercise,
+                                button
+                            );
+
+                        }
+                    );
+
+                createWorkoutProgress(
+                    workout
+                );
+
+            }
+        );
+
+    updateWorkoutProgress();
+
+}
+
+
+function loadExercise(
+    id,
+    exercise,
+    button
+){
+
+    const data =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    const done =
+        !!(
+            data[todayKey()] &&
+            data[todayKey()][id]
+        );
+
+    setExerciseVisual(
+        exercise,
+        button,
+        done
+    );
+
+}
+
+
+function setExerciseVisual(
+    exercise,
+    button,
+    done
+){
+
+    button.classList.toggle(
+        "completed",
+        done
+    );
+
+    exercise.classList.toggle(
+        "empire-completed",
+        done
+    );
+
+}
+
+
+function toggleExercise(
+    id,
+    exercise,
+    button
+){
+
+    const data =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    const date =
+        todayKey();
+
+    if(!data[date])
+        data[date] = {};
+
+    data[date][id] =
+        !data[date][id];
+
+    saveJSON(
+        EXERCISE_KEY,
+        data
+    );
+
+    setExerciseVisual(
+        exercise,
+        button,
+        data[date][id]
+    );
+
+    updateWorkoutProgress();
+
+    updateAllProgress();
+
+    updateCalendar();
+
+    if(data[date][id]){
+
+        sound("check");
+        vibrate(15);
+
+    }else{
+
+        sound("click");
+
+    }
+
+}
+
+
+/* =========================================================
+   WORKOUT PROGRESS
+========================================================= */
+
+function createWorkoutProgress(
+    workout
+){
+
+    if(
+        workout.querySelector(
+            ".session-progress"
+        )
+    )
+        return;
+
+    const exercises =
+        workout.querySelectorAll(
+            ".exercise"
+        );
+
+    const progress =
+        document.createElement(
+            "div"
+        );
+
+    progress.className =
+        "session-progress";
+
+    progress.innerHTML = `
+
+        <div class="session-progress-text">
+            EXERCÍCIOS:
+            <strong class="session-count">
+                0/${exercises.length}
+            </strong>
+        </div>
+
+        <div class="session-progress-bar">
+            <div class="session-progress-fill"></div>
+        </div>
+
+    `;
+
+    workout.appendChild(
+        progress
+    );
+
+    const button =
+        document.createElement(
+            "button"
+        );
+
+    button.className =
+        "button complete-session";
+
+    button.textContent =
+        "CONCLUIR SESSÃO";
+
+    button.onclick =
+        () => completeWorkout(
+            workout
+        );
+
+    workout.appendChild(
+        button
+    );
+
+}
+
+
+function updateWorkoutProgress(){
+
+    document
+        .querySelectorAll(
+            ".workout"
+        )
+        .forEach(
+            workout => {
+
+                const exercises =
+                    workout.querySelectorAll(
+                        ".exercise"
+                    );
+
+                let done = 0;
+
+                exercises.forEach(
+                    exercise => {
+
+                        if(
+                            exercise
+                                .querySelector(
+                                    ".exercise-check"
+                                )
+                                ?.classList
+                                .contains(
+                                    "completed"
+                                )
+                        ){
+
+                            done++;
+
+                        }
+
+                    }
+                );
+
+                const count =
+                    workout.querySelector(
+                        ".session-count"
+                    );
+
+                const fill =
+                    workout.querySelector(
+                        ".session-progress-fill"
+                    );
+
+                if(count)
+                    count.textContent =
+                        `${done}/${exercises.length}`;
+
+                if(fill)
+                    fill.style.width =
+                        `${done / exercises.length * 100}%`;
+
+                const button =
+                    workout.querySelector(
+                        ".complete-session"
+                    );
+
+                if(button){
+
+                    button.textContent =
+                        done === exercises.length
+                        ? "✓ SESSÃO CONCLUÍDA"
+                        : "CONCLUIR SESSÃO";
+
+                }
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   COMPLETE SESSION
+========================================================= */
+
+function completeWorkout(
+    workout
+){
+
+    const date =
+        todayKey();
+
+    const exercises =
+        workout.querySelectorAll(
+            ".exercise"
+        );
+
+    const data =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    if(!data[date])
+        data[date] = {};
+
+    exercises.forEach(
+        exercise => {
+
+            const id =
+                exercise.dataset.id;
+
+            data[date][id] =
+                true;
+
+            const button =
+                exercise.querySelector(
+                    ".exercise-check"
+                );
+
+            setExerciseVisual(
+                exercise,
+                button,
+                true
+            );
+
+        }
+    );
+
+    saveJSON(
+        EXERCISE_KEY,
+        data
+    );
+
+    const sessions =
+        getJSON(
+            SESSION_KEY
+        );
+
+    if(!sessions[date])
+        sessions[date] = {};
+
+    sessions[date][
+        workout.dataset.workout
+    ] = true;
+
+    saveJSON(
+        SESSION_KEY,
+        sessions
+    );
+
+    updateWorkoutProgress();
+
+    updateAllProgress();
+
+    updateCalendar();
+
+    sound("complete");
+
+    vibrate(
+        [25,40,25]
+    );
+
+}
+
+
+/* =========================================================
+   SESSION DETECTION
+========================================================= */
+
+function rebuildSessions(){
+
+    const exercises =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    const sessions = {};
+
+    Object.keys(exercises)
+        .forEach(
+            date => {
+
+                sessions[date] = {};
+
+                document
+                    .querySelectorAll(
+                        ".workout"
+                    )
+                    .forEach(
+                        workout => {
+
+                            const ids =
+                                [
+                                    ...workout.querySelectorAll(
+                                        ".exercise"
+                                    )
+                                ]
+                                .map(
+                                    e =>
+                                        e.dataset.id
+                                );
+
+                            const complete =
+                                ids.length > 0 &&
+                                ids.every(
+                                    id =>
+                                        exercises[date]?.[id]
+                                );
+
+                            if(complete){
+
+                                sessions[date][
+                                    workout.dataset.workout
+                                ] = true;
+
+                            }
+
+                        }
+                    );
+
+            }
+        );
+
+    saveJSON(
+        SESSION_KEY,
+        sessions
+    );
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateAllProgress(){
+
+    rebuildSessions();
+
+    const sessions =
+        getJSON(
+            SESSION_KEY
+        );
+
+    let totalSessions = 0;
+
+    Object.values(sessions)
+        .forEach(
+            day => {
+
+                totalSessions +=
+                    Object.values(day)
+                        .filter(Boolean)
+                        .length;
+
+            }
+        );
+
+    let totalExercises = 0;
+
+    const exercises =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    Object.values(exercises)
+        .forEach(
+            day => {
+
+                totalExercises +=
+                    Object.values(day)
+                        .filter(Boolean)
+                        .length;
+
+            }
+        );
+
+    const weeks =
+        Math.floor(
+            totalSessions / 3
+        );
+
+    const phase =
+        Math.min(
+            100,
+            Math.round(
+                totalSessions / 12 * 100
+            )
+        );
+
+    document
+        .getElementById(
+            "sessionsDone"
+        )
+        .textContent =
+        totalSessions;
+
+    document
+        .getElementById(
+            "weeksDone"
+        )
+        .textContent =
+        weeks;
+
+    document
+        .getElementById(
+            "exercisesDone"
+        )
+        .textContent =
+        totalExercises;
+
+    document
+        .getElementById(
+            "progressNumber"
+        )
+        .textContent =
+        phase + "%";
+
+    document
+        .getElementById(
+            "progressRing"
+        )
+        .style.setProperty(
+            "--progress",
+            phase
+        );
+
+    updateStreak();
+
+}
+
+
+/* =========================================================
+   STREAK
+========================================================= */
+
+function updateStreak(){
+
+    const sessions =
+        getJSON(
+            SESSION_KEY
+        );
+
+    let date =
+        new Date();
+
+    let streak = 0;
+
+    /*
+     * A sequência considera dias em que
+     * houve uma sessão completa.
+     */
+
+    while(true){
+
+        const key =
+            dateKey(date);
+
+        const has =
+            sessions[key] &&
+            Object.values(
+                sessions[key]
+            ).some(Boolean);
+
+        if(!has)
+            break;
+
+        streak++;
+
+        date.setDate(
+            date.getDate() - 1
+        );
+
+    }
+
+    document
+        .getElementById(
+            "streakDone"
+        )
+        .textContent =
+        streak;
+
+    document
+        .getElementById(
+            "consistencyStatus"
+        )
+        .textContent =
+        streak >= 3
+        ? "STRONG"
+        : streak >= 1
+        ? "BUILDING"
+        : "STARTING";
+
+}
+
+
+function dateKey(date){
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(date.getMonth()+1)
+            .padStart(2,"0") +
+        "-" +
+        String(date.getDate())
+            .padStart(2,"0")
+    );
+
+}
+
+
+/* =========================================================
+   CALENDAR
+========================================================= */
+
+let calendarDate =
+    new Date();
+
+
+function updateCalendar(){
+
+    const grid =
+        document.getElementById(
+            "calendarGrid"
+        );
+
+    const title =
+        document.getElementById(
+            "calendarMonth"
+        );
+
+    if(!grid || !title)
+        return;
+
+    const year =
+        calendarDate.getFullYear();
+
+    const month =
+        calendarDate.getMonth();
+
+    const first =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+    const total =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+    const monthName =
+        new Intl.DateTimeFormat(
+            "pt-BR",
+            {
+                month:"long",
+                year:"numeric"
+            }
+        ).format(
+            new Date(
+                year,
+                month,
+                1
+            )
+        );
+
+    title.textContent =
+        monthName
+            .charAt(0)
+            .toUpperCase() +
+        monthName.slice(1);
+
+    grid.innerHTML = "";
+
+    const data =
+        getJSON(
+            EXERCISE_KEY
+        );
+
+    const today =
+        todayKey();
+
+    for(
+        let i = 0;
+        i < first;
+        i++
+    ){
+
+        const empty =
+            document.createElement(
+                "div"
+            );
+
+        grid.appendChild(
+            empty
+        );
+
+    }
+
+    for(
+        let day = 1;
+        day <= total;
+        day++
+    ){
+
+        const key =
+            `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+        const cell =
+            document.createElement(
+                "div"
+            );
+
+        cell.className =
+            "calendar-day";
+
+        cell.textContent =
+            day;
+
+        if(key === today)
+            cell.classList.add(
+                "today"
+            );
+
+        const completed =
+            data[key]
+            ? Object.values(
+                data[key]
+            ).filter(Boolean).length
+            : 0;
+
+        const trainingDay =
+            isTrainingDay(key);
+
+        if(completed >= 10){
+
+            cell.classList.add(
+                "completed"
+            );
+
+        }else if(completed > 0){
+
+            cell.classList.add(
+                "partial"
+            );
+
+        }else if(
+            trainingDay &&
+            key < today
+        ){
+
+            cell.classList.add(
+                "missed"
+            );
+
+        }
+
+        grid.appendChild(
+            cell
+        );
+
+    }
+
+}
+
+
+function isTrainingDay(key){
+
+    const date =
+        new Date(
+            key + "T12:00:00"
+        );
+
+    const day =
+        date.getDay();
+
+    return (
+        day === 1 ||
+        day === 3 ||
+        day === 5
+    );
+
+}
+
+
+document
+    .getElementById(
+        "calendarPrevious"
+    )
+    .onclick =
+    () => {
+
+        calendarDate.setMonth(
+            calendarDate.getMonth() - 1
+        );
+
+        updateCalendar();
+
+        sound();
+
+    };
+
+
+document
+    .getElementById(
+        "calendarNext"
+    )
+    .onclick =
+    () => {
+
+        calendarDate.setMonth(
+            calendarDate.getMonth() + 1
+        );
+
+        updateCalendar();
+
+        sound();
+
+    };
+
+
+/* =========================================================
+   SOUND CONTROL
+========================================================= */
+
+function toggleSound(){
+
+    const current =
+        localStorage.getItem(
+            SOUND_KEY
+        );
+
+    localStorage.setItem(
+        SOUND_KEY,
+        current === "off"
+        ? "on"
+        : "off"
+    );
+
+    updateSoundButtons();
+
+}
+
+
+function updateSoundButtons(){
+
+    const enabled =
+        localStorage.getItem(
+            SOUND_KEY
+        ) !== "off";
+
+    const text =
+        enabled
+        ? "SOM ON"
+        : "SOM OFF";
+
+    const soundButton =
+        document.getElementById(
+            "soundButton"
+        );
+
+    const appButton =
+        document.getElementById(
+            "appSoundButton"
+        );
+
+    if(soundButton)
+        soundButton.textContent =
+            text;
+
+    if(appButton)
+        appButton.textContent =
+            enabled
+            ? "SOUND"
+            : "MUTED";
+
+}
+
+
+document
+    .getElementById(
+        "soundButton"
+    )
+    .onclick =
+    toggleSound;
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile(){
+
+    const modal =
+        document.getElementById(
+            "profileModal"
+        );
+
+    modal.classList.add(
+        "open"
+    );
+
+    sound("click");
+
+}
+
+
+function closeProfile(){
+
+    document
+        .getElementById(
+            "profileModal"
+        )
+        .classList.remove(
+            "open"
+        );
+
+}
+
+
+function saveProfile(){
+
+    const profile = {
+
+        name:
+            document.getElementById(
+                "profileName"
+            ).value,
+
+        goal:
+            document.getElementById(
+                "profileGoal"
+            ).value,
+
+        level:
+            document.getElementById(
+                "profileLevel"
+            ).value,
+
+        equipment:
+            document.getElementById(
+                "profileEquipment"
+            ).value
+
+    };
+
+    saveJSON(
+        PROFILE_KEY,
+        profile
+    );
+
+    updateGreeting();
+
+    document
+        .getElementById(
+            "profileStatus"
+        )
+        .textContent =
+        "Perfil salvo neste aparelho.";
+
+    sound("complete");
+
+}
+
+
+function loadProfile(){
+
+    const profile =
+        getJSON(
+            PROFILE_KEY
+        );
+
+    if(profile.name)
+        document
+            .getElementById(
+                "profileName"
+            )
+            .value =
+            profile.name;
+
+    if(profile.goal)
+        document
+            .getElementById(
+                "profileGoal"
+            )
+            .value =
+            profile.goal;
+
+    if(profile.level)
+        document
+            .getElementById(
+                "profileLevel"
+            )
+            .value =
+            profile.level;
+
+    if(profile.equipment)
+        document
+            .getElementById(
+                "profileEquipment"
+            )
+            .value =
+            profile.equipment;
+
+    updateGreeting();
+
+}
+
+
+function updateGreeting(){
+
+    const profile =
+        getJSON(
+            PROFILE_KEY
+        );
+
+    const greeting =
+        document.getElementById(
+            "personalGreeting"
+        );
+
+    if(!greeting)
+        return;
+
+    greeting.textContent =
+        profile.name
+        ? `WELCOME, ${profile.name.toUpperCase()} / PHASE 01`
+        : "EMPIRE TRAINING PROGRAM / PHASE 01";
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+let timerSeconds = 90;
+
+let timerInterval =
+    null;
+
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(
+            timerSeconds / 60
+        );
+
+    const seconds =
+        timerSeconds % 60;
+
+    document
+        .getElementById(
+            "timerDisplay"
+        )
+        .textContent =
+        `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+
+}
+
+
+function setTimer(seconds){
+
+    pauseTimer();
+
+    timerSeconds =
+        seconds;
+
+    updateTimer();
+
+    sound();
+
+}
+
+
+function startTimer(){
+
+    if(timerInterval)
+        return;
+
+    initAudio();
+
+    timerInterval =
+        setInterval(
+            () => {
+
+                if(timerSeconds <= 0){
+
+                    pauseTimer();
+
+                    sound("timer");
+
+                    vibrate(
+                        [100,60,100]
+                    );
+
+                    return;
+
+                }
+
+                timerSeconds--;
+
+                updateTimer();
+
+            },
+            1000
+        );
+
+}
+
+
+function pauseTimer(){
+
+    if(timerInterval){
+
+        clearInterval(
+            timerInterval
+        );
+
+        timerInterval =
+            null;
+
+    }
+
+}
+
+
+function resetTimer(){
+
+    pauseTimer();
+
+    timerSeconds =
+        90;
+
+    updateTimer();
+
+    sound();
+
+}
+
+
+function openTimer(){
+
+    document
+        .getElementById(
+            "timerModal"
+        )
+        .classList.add(
+            "open"
+        );
+
+    sound();
+
+}
+
+
+function closeTimer(){
+
+    pauseTimer();
+
+    document
+        .getElementById(
+            "timerModal"
+        )
+        .classList.remove(
+            "open"
+        );
+
+}
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".theme-button"
+    )
+    .forEach(
+        button => {
+
+            button.onclick =
+                () => {
+
+                    const theme =
+                        button.dataset.theme;
+
+                    if(theme === "default"){
+
+                        document.body.removeAttribute(
+                            "data-theme"
+                        );
+
+                    }else{
+
+                        document.body.dataset.theme =
+                            theme;
+
+                    }
+
+                    localStorage.setItem(
+                        THEME_KEY,
+                        theme
+                    );
+
+                    document
+                        .querySelectorAll(
+                            ".theme-button"
+                        )
+                        .forEach(
+                            b =>
+                                b.classList.toggle(
+                                    "active",
+                                    b === button
+                                )
+                        );
+
+                    sound();
+
+                };
+
+        }
+    );
+
+
+function loadTheme(){
+
+    const theme =
+        localStorage.getItem(
+            THEME_KEY
+        ) || "default";
+
+    if(theme === "default"){
+
+        document.body.removeAttribute(
+            "data-theme"
+        );
+
+    }else{
+
+        document.body.dataset.theme =
+            theme;
+
+    }
+
+    document
+        .querySelectorAll(
+            ".theme-button"
+        )
+        .forEach(
+            button => {
+
+                button.classList.toggle(
+                    "active",
+                    button.dataset.theme === theme
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+document
+    .getElementById(
+        "introCrown"
+    )
+    .onclick =
+    () => {
+
+        initAudio();
+
+        sound("complete");
+
+        document
+            .getElementById(
+                "intro"
+            )
+            .classList.add(
+                "hidden"
+            );
+
+    };
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToSection(id){
+
+    const target =
+        document.getElementById(id);
+
+    if(target){
+
+        target.scrollIntoView({
+            behavior:"smooth"
+        });
+
+        sound();
+
+    }
+
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+document
+    .getElementById(
+        "exportButton"
+    )
+    .onclick =
+    () => {
+
+        const backup = {
+
+            version:2,
+
+            exportedAt:
+                new Date()
+                    .toISOString(),
+
+            exercises:
+                getJSON(
+                    EXERCISE_KEY
+                ),
+
+            sessions:
+                getJSON(
+                    SESSION_KEY
+                ),
+
+            profile:
+                getJSON(
+                    PROFILE_KEY
+                )
+
+        };
+
+        const blob =
+            new Blob(
+                [
+                    JSON.stringify(
+                        backup,
+                        null,
+                        2
+                    )
+                ],
+                {
+                    type:
+                        "application/json"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+        link.href =
+            url;
+
+        link.download =
+            "empire-training-backup.json";
+
+        link.click();
+
+        URL.revokeObjectURL(
+            url
+        );
+
+        sound("complete");
+
+    };
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+document
+    .getElementById(
+        "importButton"
+    )
+    .onclick =
+    () => {
+
+        document
+            .getElementById(
+                "importFile"
+            )
+            .click();
+
+    };
+
+
+document
+    .getElementById(
+        "importFile"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            const file =
+                event.target.files[0];
+
+            if(!file)
+                return;
+
+            const reader =
+                new FileReader();
+
+            reader.onload =
+                () => {
+
+                    try{
+
+                        const backup =
+                            JSON.parse(
+                                reader.result
+                            );
+
+                        if(
+                            backup.exercises
+                        ){
+
+                            saveJSON(
+                                EXERCISE_KEY,
+                                backup.exercises
+                            );
+
+                        }
+
+                        if(
+                            backup.sessions
+                        ){
+
+                            saveJSON(
+                                SESSION_KEY,
+                                backup.sessions
+                            );
+
+                        }
+
+                        if(
+                            backup.profile
+                        ){
+
+                            saveJSON(
+                                PROFILE_KEY,
+                                backup.profile
+                            );
+
+                        }
+
+                        location.reload();
+
+                    }catch{
+
+                        alert(
+                            "Arquivo de backup inválido."
+                        );
+
+                    }
+
+                };
+
+            reader.readAsText(
+                file
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   PWA INSTALL
+========================================================= */
+
+let deferredInstallPrompt =
+    null;
+
+window.addEventListener(
+    "beforeinstallprompt",
+    event => {
+
+        event.preventDefault();
+
+        deferredInstallPrompt =
+            event;
+
+        document
+            .getElementById(
+                "installButton"
+            )
+            .classList.add(
+                "visible"
+            );
+
+    }
+);
+
+
+document
+    .getElementById(
+        "installButton"
+    )
+    .onclick =
+    async () => {
+
+        if(!deferredInstallPrompt){
+
+            alert(
+                "O navegador ainda não disponibilizou a instalação. Verifique o menu do Chrome."
+            );
+
+            return;
+
+        }
+
+        deferredInstallPrompt.prompt();
+
+        await deferredInstallPrompt.userChoice;
+
+        deferredInstallPrompt =
+            null;
+
+        document
+            .getElementById(
+                "installButton"
+            )
+            .classList.remove(
+                "visible"
+            );
+
+    };
+
+
+/* =========================================================
+   SERVICE WORKER
+========================================================= */
+
+if(
+    "serviceWorker" in navigator
+){
+
+    window.addEventListener(
+        "load",
+        () => {
+
+            navigator.serviceWorker
+                .register(
+                    "./sw.js"
+                )
+                .then(
+                    registration => {
+
+                        console.log(
+                            "Empire Training PWA ativo:",
+                            registration.scope
+                        );
+
+                    }
+                )
+                .catch(
+                    error => {
+
+                        console.error(
+                            "Erro no Service Worker:",
+                            error
+                        );
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GENERAL INTERACTION SOUND
+========================================================= */
+
+document.addEventListener(
+    "pointerdown",
+    () => {
+
+        initAudio();
+
+    },
+    {
+        once:true,
+        passive:true
+    }
+);
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        loadTheme();
+
+        loadProfile();
+
+        initializeExercises();
+
+        rebuildSessions();
+
+        updateWorkoutProgress();
+
+        updateAllProgress();
+
+        updateCalendar();
+
+        updateTimer();
+
+        updateSoundButtons();
+
+    }
+);
+
+</script>
+
+</body>
+</html>
